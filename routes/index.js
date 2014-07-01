@@ -66,7 +66,7 @@ exports.send_sms = function(req, res) {
 	twilio_client.sendSms({
 
 	    to:'+16467838457', // Any number Twilio can deliver to
-	    from: '+14155992671', // A number you bought from Twilio and can use for outbound communication
+	    from: '+16466473254', // A number you bought from Twilio and can use for outbound communication
 	    body: 'word to your mother.' // body of the SMS message
 
 	}, function(err, responseData) { //this function is executed when a response is received from Twilio
