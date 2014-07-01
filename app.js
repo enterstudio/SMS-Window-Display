@@ -52,6 +52,8 @@ app.get('/', routes.index);
 app.get('/sms', routes.send_sms);
 app.post('/incoming/digits',routes.incoming_digits);
 app.post('/incoming',routes.incoming_call);
+app.post('/incoming_sms', routes.incoming_sms);
+app.get('/debug', routes.debug);
 
 // create NodeJS HTTP server using 'app'
 http.createServer(app).listen(app.get('port'), function(){

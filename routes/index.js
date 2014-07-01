@@ -10,12 +10,28 @@ var twilio_client = require('twilio')(process.env.TWILIO_ACCT_SID, process.env.T
 var twilio = require('twilio');
 var resp = twilio.TwimlResponse();
 
+
+var twilio_data = {};
+
 exports.index = function(req, res) {
 
 	res.send("welcome");
 
 }
 
+
+exports.incoming_sms = function(req, res) {
+
+	twilio_data = req.body;
+	res.send('thank you');
+
+}
+
+exports.debug = function(req, res) {
+
+	res.json(twilio_data);
+
+}
 /*
 	GET /
 */
