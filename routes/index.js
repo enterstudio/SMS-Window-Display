@@ -26,19 +26,20 @@ exports.incoming_sms = function (req, res) {
 	twilio_data = req.body;
 	res.send('thank you');
 
-// ping little bits
-	pingLittleBits({
+	// ping little bits
+	var littleBitsData = {
 		deviceId: process.env.LITTLEBITS_DEVICEID,
 		token: process.env.LITTLEBITS_TOKEN,
 		percent: 100, 
-		duration_ms:5000
-	}, function (err, body) {
+		duration_ms: 2000
+	};
+
+	pingLittleBits(littleBitsData, function (err, body) {
 		console.log('little bits: ' + body);
-		
 	});
 
 	// SMS reply
-	if (twilio_client && twilio_client.hasOwnProperty('From')) {
+	if (twilio_data && twilio_data.hasOwnProperty('From')) {
 		var message = 'Hey there!';
 		twilio_send_sms(twilio_data, message, function (err, result) {
 
