@@ -42,6 +42,8 @@ app.get('/', function (req, res) {
 app.post('/incoming_sms', function (req, res) {
 
   twilio_data = req.body;
+  console.log(req.body);
+  console.log(typeof(req.body));
   res.send('OKTHANKS'); // send response back to twilio
 
   // ping little bits
