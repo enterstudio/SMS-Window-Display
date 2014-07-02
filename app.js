@@ -3,37 +3,39 @@
  * Module dependencies.
  */
 
-var express = require('express');
-var http = require('http');
-var path = require('path');
-
-var request = require('request');
-var twilio_client = require('twilio')(process.env.TWILIO_ACCT_SID, process.env.TWILIO_AUTH_TOKEN);
-var twilio = require('twilio');
-var resp = twilio.TwimlResponse();
-
-var twilio_data = {}; // for debugging
-var twilio_phone_number = process.env.TWILIO_PHONE_NUMBER;
+var express = require('express'),
+  http = require('http'),
+  request = require('request'),
+  bodyParser = require('body-parser'),
+  twilio_client = require('twilio')(process.env.TWILIO_ACCT_SID, process.env.TWILIO_AUTH_TOKEN);
 
 // the ExpressJS App
 var app = express();
 
+// some twilio variables
+var twilio_data = {}; // for debugging - will hold the latest sms received from twilio
+var twilio_phone_number = process.env.TWILIO_PHONE_NUMBER; // your twilio phone # stored in environment variables (or hardcoded)
+
 // configuration of port, templates (/views), static files (/public)
 // and other expressjs settings for the web server.
-app.configure(function(){
+
+// parse application/json
+app.use(bodyParser.json());
+app.set('port', process.env.PORT || 5000);
+
+// app.configure(function(){
 
   // server port number
-  app.set('port', process.env.PORT || 5000);
-  app.use(express.bodyParser());
-  app.use(express.methodOverride());
-  app.use(app.router);
   
-});
+  // app.use(express.bodyParser());
+  // app.use(express.methodOverride());
+  // app.use(app.router);
+  
+// });
 
 // ROUTES
 app.get('/', function (req, res) {
   res.send("welcome");
-  
 });
 
 
