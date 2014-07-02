@@ -42,7 +42,7 @@ app.get('/', function (req, res) {
 app.post('/incoming_sms', function (req, res) {
 
   twilio_data = req.body;
-  res.send('thank you');
+  res.send('OKTHANKS'); // send response back to twilio
 
   // ping little bits
   var littleBitsCloudDataBody = {
