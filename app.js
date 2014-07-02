@@ -1,8 +1,3 @@
-
-/**
- * Module dependencies.
- */
-
 var express = require('express'),
   http = require('http'),
   request = require('request'),
@@ -16,22 +11,10 @@ var app = express();
 var twilio_data = {}; // for debugging - will hold the latest sms received from twilio
 var twilio_phone_number = process.env.TWILIO_PHONE_NUMBER; // your twilio phone # stored in environment variables (or hardcoded)
 
-// configuration of port, templates (/views), static files (/public)
-// and other expressjs settings for the web server.
 
-// parse application/json
-app.use(bodyParser.urlencoded());
-app.set('port', process.env.PORT || 5000);
+app.use(bodyParser.urlencoded()); // parse incoming body with bodyParser urlencoded
 
-// app.configure(function(){
-
-  // server port number
-  
-  // app.use(express.bodyParser());
-  // app.use(express.methodOverride());
-  // app.use(app.router);
-  
-// });
+app.set('port', process.env.PORT || 5000); // set up port #
 
 // ROUTES
 app.get('/', function (req, res) {
@@ -42,8 +25,6 @@ app.get('/', function (req, res) {
 app.post('/incoming_sms', function (req, res) {
 
   twilio_data = req.body;
-  console.log(req.body);
-  console.log(typeof(req.body));
   res.send('OKTHANKS'); // send response back to twilio
 
   // ping little bits
@@ -122,16 +103,3 @@ var pingLittleBits = function (littlebitsData, callback) {
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
