@@ -74,6 +74,9 @@ app.post('/incoming_sms', function (req, res) {
         console.log(err);
       }
     });
+  } else {
+    console.log('no twilio data');
+    console.log(twilio_data);
   }
 
 });
