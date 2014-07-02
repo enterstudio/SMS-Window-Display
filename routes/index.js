@@ -6,12 +6,12 @@
  */
 
 //require the Twilio module and create a REST client
+var request = require('request');
 var twilio_client = require('twilio')(process.env.TWILIO_ACCT_SID, process.env.TWILIO_AUTH_TOKEN);
 var twilio = require('twilio');
 var resp = twilio.TwimlResponse();
 
-
-var twilio_data = {};
+var twilio_data = {}; // for debugging
 
 exports.index = function(req, res) {
 
@@ -25,29 +25,29 @@ exports.incoming_sms = function(req, res) {
 	twilio_data = req.body;
 	res.send('thank you');
 
-	//Send an SMS text message
-	twilio_client.sendSms({
+	// ping little bits
 
-	    to: '+1' + twilio_data.From, // Any number Twilio can deliver to
-	    from: '+16466473254', // A number you bought from Twilio and can use for outbound communication
-	    body: 'word to your mother.' // body of the SMS message
 
-	}, function(err, responseData) { //this function is executed when a response is received from Twilio
+	// SMS reply
+	if (twilio_client && twilio_client.hasOwnProperty('From')) {
+		var message = 'Hey there!';
+		twilio_send_sms(twilio_data, message, function(err, result) {
 
 	    if (!err) { // "err" is an error received during the request, if any
 
-	        // "responseData" is a JavaScript object containing data received from Twilio.
-	        // A sample response from sending an SMS message is here (click "JSON" to see how the data appears in JavaScript):
-	        // http://www.twilio.com/docs/api/rest/sending-sms#example-1
+	      // "responseData" is a JavaScript object containing data received from Twilio.
+	      // A sample response from sending an SMS message is here (click "JSON" to see how the data appears in JavaScript):
+	      // http://www.twilio.com/docs/api/rest/sending-sms#example-1
 
-	        console.log(responseData.from); // outputs "+14506667788"
-	        console.log(responseData.body); // outputs "word to your mother."
+	      console.log(result.from); // outputs "+14506667788"
+	      console.log(result.body); // outputs "word to your mother."
 
 	    } else {
 
 	    	console.log(err);
 	    }
-	});
+		});
+	}
 
 }
 
@@ -117,4 +117,29 @@ exports.incoming_digits = function(req,res) {
 	console.log("!!!!");
 	console.log(req.body);
 	res.send("digits");
+}
+
+var twilio_send_sms = function(twilio_data, message, callback) {
+		//Send an SMS text message
+	twilio_client.sendSms({
+
+    to: '+1' + twilio_data.From, // Any number Twilio can deliver to
+    from: '+16466473254', // A number you bought from Twilio and can use for outbound communication
+    body: message // body of the SMS message
+
+	}, callback);
+}
+
+var pingLittleBits = function(littlebitsData, callback) {
+	var options = {
+		url: '',
+		method: 'POST',
+		headers : {
+			'Authorization' : 'Bearer ' + process.env.LITTLEBITS_TOKEN
+		},
+		json: true,
+		body: littlebitsData
+	};
+
+	request(options, callback);
 }
