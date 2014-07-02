@@ -20,7 +20,7 @@ var twilio_phone_number = process.env.TWILIO_PHONE_NUMBER; // your twilio phone 
 // and other expressjs settings for the web server.
 
 // parse application/json
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded());
 app.set('port', process.env.PORT || 5000);
 
 // app.configure(function(){
