@@ -2,14 +2,20 @@
   "name": "windowdisplay",
   "version": "0.0.1",
   "dependencies": {
-    "twilio": "1.6.x",
+    "twilio": "2.1.1",
     "hogan-express": "^0.5.2",
     "request": "^2.36.0",
     "body-parser": "^1.4.3",
-    "express": "^4.4.5"
+    "express": "^4.4.5",
+    "snyk": "^1.85.0"
   },
   "engines": {
     "node": "0.10.x",
     "npm": "1.2.x"
-  }
+  },
+  "scripts": {
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
+  },
+  "snyk": true
 }
